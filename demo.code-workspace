@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "jest.autoRun": { "watch": false, "onSave": false, "onStartup": false }
+  },
+  "extensions": {
+    "recommendations": [
+      "nrwl.angular-console",
+      "esbenp.prettier-vscode",
+      "firsttris.vscode-jest-runner",
+      "dbaeumer.vscode-eslint"
+    ]
+  }
+}
