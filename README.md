@@ -6,6 +6,7 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)][4]
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)][13]
 [![prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)][17]
+[![eslint](https://img.shields.io/badge/code%20style-eslint-green.svg)][19]
 [![jest](https://jestjs.io/img/jest-badge.svg)][18]
 
 ## Dependencies
@@ -90,3 +91,4 @@ The project is available as open source under the terms of the [MIT][1] [License
 [16]: https://nx.dev 'Nx: Smart, Fast and Extensible Build System'
 [17]: https://prettier.io 'Prettier: Opinionated Code Formatter'
 [18]: https://jestjs.io 'Jest: Delightful JavaScript Testing'
+[19]: https://eslint.org 'ESLint'
