@@ -41,6 +41,8 @@
 - Run `npx nx run front:test` to test the front app
 - Run `npx nx run front:lint` to lint the front app
 - Run `npx nx run front:e2e` to run the e2e tests for the front app
+- Run `npx nx run front:deploy:preview` to deploy front to preview environment
+- Run `npx nx run front:deploy:production` to deploy front to production environment
 
 ### Nx: Smart, Fast and Extensible Build System
 
