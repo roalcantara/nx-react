@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "production": "nx-mono",
+    "preview": "nx-mono-preview",
+    "default": "nx-mono-preview"
+  }
+}
