@@ -4,10 +4,13 @@
 [![Editor Config](https://img.shields.io/badge/Editor%20Config-1.0.1-crimson.svg)][3]
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)][4]
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)][4]
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)][13]
 
 ## Dependencies
 
 - [git][5]
+- [pre-commit][11]
+- [gitlint][12]
 
 ## Install
 
@@ -44,3 +47,6 @@ The project is available as open source under the terms of the [MIT][1] [License
 [8]: https://reactjs.org "React"
 [9]: https://typescript.org "TypeScript"
 [10]: https://www.gnu.org/s/make/manual/make.html "GNU Make"
+[11]: https://pre-commit.com "A framework for managing and maintaining multi-language pre-commit hooks"
+[12]: https://jorisroovers.com/gitlint "git commit message linter"
+[13]: https://conventionalcommits.org "Conventional Commits"
