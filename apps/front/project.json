@@ -80,6 +80,54 @@
           }
         ]
       }
+    },
+    "bundle": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "color": true,
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use preview" },
+            { "command": "npx nx run front:build:preview" }
+          ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use production" },
+            { "command": "npx nx run front:build:production" }
+          ]
+        }
+      }
+    },
+    "deploy": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "color": true,
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npx nx run front:bundle:preview" },
+            {
+              "command": "npx firebase deploy --only hosting --project=preview"
+            }
+          ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npx nx run front:bundle:production" },
+            {
+              "command": "npx firebase deploy --only hosting --project=production"
+            }
+          ]
+        }
+      }
     }
   }
 }
