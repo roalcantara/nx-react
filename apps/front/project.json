@@ -42,6 +42,16 @@
         "cwd": "apps/front",
         "parallel": false,
         "commands": [{ "command": "npm run start" }]
+      },
+      "configurations": {
+        "production": {
+          "commands": [
+            { "command": "npx nx run front:build:production" },
+            {
+              "command": "npx sirv ../../dist/apps/front --port 8080 --cors --single"
+            }
+          ]
+        }
       }
     },
     "lint": {
