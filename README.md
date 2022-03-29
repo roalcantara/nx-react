@@ -11,6 +11,8 @@
 - [git][5]
 - [pre-commit][11]
 - [gitlint][12]
+- [asdf][14]
+- [direnv][15]
 
 ## Install
 
@@ -26,6 +28,9 @@
 
 - [Standard Readme][4]
 - [GNU Make][10]
+- [Conventional Commits][13]
+- [ASDF: Manage multiple runtime versions with a single CLI tool][14]
+- [Direnv: A better way to manage your environments][15]
 
 ## Contributing
 
@@ -50,3 +55,5 @@ The project is available as open source under the terms of the [MIT][1] [License
 [11]: https://pre-commit.com "A framework for managing and maintaining multi-language pre-commit hooks"
 [12]: https://jorisroovers.com/gitlint "git commit message linter"
 [13]: https://conventionalcommits.org "Conventional Commits"
+[14]: https://asdf-vm.com "Manage multiple runtime versions with a single CLI tool"
+[15]: http://direnv.net "A better way to manage your environments"
