@@ -58,6 +58,18 @@
         "parallel": false,
         "commands": [{ "command": "npm run test -- --watchAll=false" }]
       }
+    },
+    "e2e": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "parallel": false,
+        "cwd": "apps/front",
+        "commands": [
+          {
+            "command": "npx start-server-and-test 'BROWSER=none npm run start' 3000 'npx cypress run'"
+          }
+        ]
+      }
     }
   }
 }
