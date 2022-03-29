@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": ["react", "react/jsx-runtime"]
+  },
+  "files": [
+    "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
+    "../../node_modules/@nrwl/react/typings/image.d.ts"
+  ],
+  "exclude": [
+    "**/__mocks__",
+    "**/__factories__",
+    "**/__fixtures__",
+    "**/specs/**/*.ts",
+    "**/specs/**/*.tsx",
+    "**/tests/**/*.ts",
+    "**/tests/**/*.tsx",
+    "**/*.test.ts",
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.spec.js",
+    "**/*.spec.jsx"
+  ],
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx", "**/*.d.ts"]
+}

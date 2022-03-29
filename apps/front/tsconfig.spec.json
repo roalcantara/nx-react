@@ -1,0 +1,30 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "types": ["jest", "node", "@testing-library/jest-dom"]
+  },
+  "include": [
+    "**/__mocks__",
+    "**/__factories__",
+    "**/__fixtures__",
+    "**/specs/**/*.ts",
+    "**/specs/**/*.tsx",
+    "**/tests/**/*.ts",
+    "**/tests/**/*.tsx",
+    "**/*.test.ts",
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.spec.js",
+    "**/*.spec.jsx",
+    "**/*.d.ts"
+  ],
+  "files": [
+    "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
+    "../../node_modules/@nrwl/react/typings/image.d.ts"
+  ]
+}
