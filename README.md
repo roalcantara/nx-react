@@ -39,6 +39,7 @@
 - Run `npx nx run front:serve` to start the front app
 - Run `npx nx run front:test` to test the front app
 - Run `npx nx run front:lint` to lint the front app
+- Run `npx nx run front:e2e` to run the e2e tests for the front app
 
 ### Nx: Smart, Fast and Extensible Build System
 
