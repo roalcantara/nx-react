@@ -1,0 +1,30 @@
+extends:
+  - plugin:@nrwl/nx/react
+  - ../../.eslintrc.yml
+ignorePatterns:
+  - '!**/*'
+overrides:
+  - files:
+      - '*.ts'
+      - '*.tsx'
+      - '*.js'
+      - '*.jsx'
+    rules:
+      node/no-extraneous-require:
+        - error
+        - allowModules:
+            - react-dev-utils
+            - tsconfig-paths-webpack-plugin
+          resolvePaths: ['./']
+          tryExtensions:
+            - .js
+            - .json
+            - .node
+  - files:
+      - '*.ts'
+      - '*.tsx'
+    rules: {}
+  - files:
+      - '*.js'
+      - '*.jsx'
+    rules: {}

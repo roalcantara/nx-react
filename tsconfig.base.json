@@ -1,0 +1,24 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": ".",
+    "strict": true,
+    "target": "es6",
+    "types": ["node"],
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "sourceMap": true,
+    "declaration": false,
+    "skipLibCheck": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipDefaultLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {}
+  },
+  "exclude": ["node_modules", "tmp"]
+}
