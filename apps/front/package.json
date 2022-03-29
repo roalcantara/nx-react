@@ -1,0 +1,26 @@
+{
+  "name": "front",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "build": "BUILD_PATH=../../dist/apps/front craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "serve": "npm start"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "not IE 9-11"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
