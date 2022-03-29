@@ -21,10 +21,18 @@
       },
       "configurations": {
         "preview": {
-          "commands": [{ "command": "npx nx run front:prepare" }, { "command": "NODE_ENV=preview npm run build" }]
+          "commands": [
+            { "command": "npx nx run front:prepare" },
+            { "command": "NODE_ENV=preview npm run build" },
+            { "command": "compress-cra -d dist/apps/front" }
+          ]
         },
         "production": {
-          "commands": [{ "command": "npx nx run front:prepare" }, { "command": "NODE_ENV=production npm run build" }]
+          "commands": [
+            { "command": "npx nx run front:prepare" },
+            { "command": "NODE_ENV=production npm run build" },
+            { "command": "compress-cra -d dist/apps/front" }
+          ]
         }
       }
     },
