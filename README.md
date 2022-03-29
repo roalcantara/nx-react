@@ -34,6 +34,8 @@
 ### Front
 
 - Run `npx nx run front:build` to build the front app
+- Run `npx nx run front:build:preview` to build the front app in preview mode
+- Run `npx nx run front:build:production` to build the front app in production mode
 - Run `npx nx run front:serve` to start the front app
 - Run `npx nx run front:test` to test the front app
 - Run `npx nx run front:lint` to lint the front app
