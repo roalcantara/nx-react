@@ -1,7 +1,11 @@
 {
   "hosting": {
     "public": "dist/apps/front",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "rewrites": [
       {
         "source": "**",
@@ -12,15 +16,32 @@
       {
         "source": "**",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=180" },
-          { "key": "X-XSS-Protection", "value": "1; mode=block" },
-          { "key": "X-Content-Type-Options", "value": "nosniff" },
-          { "key": "Access-Control-Allow-Origin", "value": "*" }
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=180"
+          },
+          {
+            "key": "X-XSS-Protection",
+            "value": "1; mode=block"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
         ]
       },
       {
         "source": "**/*.@(eot|otf|ttf|ttc|woff|font.css|ico)",
-        "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
       },
       {
         "source": "**/*.@(jpg|jpeg|gif|png|ico|svg|css|js|webp)",
@@ -43,14 +64,34 @@
       {
         "source": "./@(service-worker.js|manifest.json)",
         "headers": [
-          { "key": "Content-Type", "value": "text/javascript; charset=utf-8" },
-          { "key": "Cache-Control", "value": "no-cache" }
+          {
+            "key": "Content-Type",
+            "value": "text/javascript; charset=utf-8"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
         ]
       },
       {
         "source": "**/*.svg",
-        "headers": [{ "key": "Content-Type", "value": "image/svg+xml; charset=utf-8" }]
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "image/svg+xml; charset=utf-8"
+          }
+        ]
       }
     ]
+  },
+  "emulators": {
+    "hosting": {
+      "port": 5888
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4888
+    }
   }
 }
