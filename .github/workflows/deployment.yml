@@ -1,0 +1,28 @@
+name: Deployment
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.firebase.outputs.url }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - run: npx nx run front:build:production
+      - name: Deploy to production
+        id: firebase
+        uses: ./.github/actions/firebase
+        with:
+          env: live
+          name: front-production
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-id: ${{ secrets.FIREBASE_PROJECT_ID_PRODUCTION }}
+          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO }}
+          lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
