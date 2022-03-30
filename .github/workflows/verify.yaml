@@ -117,8 +117,17 @@ jobs:
           name: lighthouse-front
           path: .lighthouseci
       - uses: FirebaseExtended/action-hosting-deploy@v0
+        id: firebase
         if: success()
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           projectId: ${{ secrets.FIREBASE_PROJECT_ID_PREVIEW }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO_PREVIEW }}
+      - run: npx lhci autorun --collect.url=${{ steps.firebase.outputs.details_url }} --collect.isSinglePageApplication=true
+        if: success()
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lighthouse-front-preview
+          path: .lighthouseci
