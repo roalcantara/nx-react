@@ -1,0 +1,38 @@
+name: Deployment
+
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  release:
+    types:
+      - created
+
+env:
+  CI: true
+  FORCE_COLOR: true
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    environment:
+      name: preview
+      url: ${{ steps.firebase.outputs.url }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup
+        uses: ./.github/actions/setup
+      - run: npx nx run front:build:production
+      - name: Deploy to production
+        id: firebase
+        uses: ./.github/actions/firebase
+        with:
+          env: live
+          name: front-production
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-id: ${{ secrets.FIREBASE_PROJECT_ID_PRODUCTION }}
+          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO }}
+          lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

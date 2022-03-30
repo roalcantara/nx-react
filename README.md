@@ -10,6 +10,7 @@
 [![jest](https://jestjs.io/img/jest-badge.svg)][18]
 [![Verify](https://github.com/roalcantara/nx-react/actions/workflows/verify.yml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/verify.yml)
 [![Release](https://github.com/roalcantara/nx-react/actions/workflows/release.yml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/release.yml)
+[![Deployment](https://github.com/roalcantara/nx-react/actions/workflows/deployment.yml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/deployment.yml)
 
 ## Dependencies
 
