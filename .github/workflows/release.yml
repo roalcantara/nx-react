@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  CI: true
+  FORCE_COLOR: true
+  SEMANTIC_VERSION: 19
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(toJSON(github.event.commits.*.message), '[skip-ci]') && !contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Semantic Release
+        uses: ./.github/actions/release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ env.SEMANTIC_VERSION }}
