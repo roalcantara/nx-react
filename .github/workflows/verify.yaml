@@ -116,3 +116,9 @@ jobs:
         with:
           name: lighthouse-front
           path: .lighthouseci
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        if: success()
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          projectId: ${{ secrets.FIREBASE_PROJECT_ID_PREVIEW }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO_PREVIEW }}
