@@ -1,0 +1,21 @@
+name: Affected apps
+description: Count affected apps
+outputs:
+  apps:
+    description: Affected apps
+    value: ${{ steps.apps.outputs.affected }}
+  libs:
+    description: Affected libs
+    value: ${{ steps.libs.outputs.affected }}
+  all:
+    description: Affected apps and libs
+    value: ${{ join(steps.*.outputs.affected, ', ')  }}
+runs:
+  using: composite
+  steps:
+    - id: apps
+      run: echo "::set-output name=affected::$(npx nx affected:apps --plain)"
+      shell: bash
+    - id: libs
+      run: echo "::set-output name=affected::$(npx nx affected:libs --plain)"
+      shell: bash
