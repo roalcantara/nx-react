@@ -63,6 +63,7 @@ jobs:
     if: needs.setup.outputs.affected != ''
     outputs:
       cache-key: ${{ needs.setup.outputs.cache-key }}
+      affected: ${{ needs.setup.outputs.affected }}
     strategy:
       matrix:
         task: ['format:check', lint, 'test --ci', 'build --prod', e2e]
@@ -87,3 +88,31 @@ jobs:
           path: ${{ needs.setup.outputs.cypress-path }}
           key: ${{ runner.os }}-cypress-${{ needs.setup.outputs.cache-key }}
       - run: npx nx affected --target=${{ matrix.task }} --parallel
+
+  lighthouse:
+    needs: verify
+    runs-on: ubuntu-latest
+    if: contains(needs.verify.outputs.affected, 'front')
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ runner.os }}-${{ needs.verify.outputs.cache-key }}
+      - run: npm ci
+        if: ${{ !steps.cache.outputs.cache-hit }}
+      - run: npx nx run front:build:preview
+      - run: npx lhci autorun --collect.staticDistDir=./dist/apps/front --collect.isSinglePageApplication=true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lighthouse-front
+          path: .lighthouseci
