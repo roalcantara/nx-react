@@ -1,0 +1,16 @@
+name: Affected apps and libs
+description: Count affected apps and libs
+outputs:
+  all:
+    description: Affected apps and libs
+    value: ${{ join(steps.*.outputs.affected, ', ')  }}
+runs:
+  using: composite
+  steps:
+    - uses: nrwl/nx-set-shas@v2
+    - id: apps
+      run: echo "::set-output name=affected::$(npx nx affected:apps --plain)"
+      shell: bash
+    - id: libs
+      run: echo "::set-output name=affected::$(npx nx affected:libs --plain)"
+      shell: bash

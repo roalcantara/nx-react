@@ -8,6 +8,7 @@
 [![prettier](https://img.shields.io/badge/code%20style-prettier-ff69b4.svg)][17]
 [![eslint](https://img.shields.io/badge/code%20style-eslint-green.svg)][19]
 [![jest](https://jestjs.io/img/jest-badge.svg)][18]
+[![Verify](https://github.com/roalcantara/nx-react/actions/workflows/verify.yml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/verify.yml)
 
 ## Dependencies
 

@@ -1,0 +1,48 @@
+name: Setup CI
+description: Setup CI
+inputs:
+  node-version:
+    description: Node version
+    required: true
+    default: '16'
+  cache-node:
+    description: Path to cache
+    required: true
+    default: node_modules
+  cache-key:
+    description: Cache key
+    required: false
+  cache-cypress:
+    description: Cache Cypress
+    required: false
+  load-affecteds:
+    description: Load affected apps and libs
+    required: false
+outputs:
+  cache-key:
+    description: Cache key
+    value: ${{ steps.cache.outputs.key }}
+  cache-hit:
+    description: Cache
+    value: ${{ steps.cache.outputs.hit }}
+  affected:
+    description: Affected apps and libs
+    value: ${{ steps.affected.outputs.all }}
+runs:
+  using: composite
+  steps:
+    - id: node
+      uses: ./.github/actions/node
+      with:
+        version: ${{ inputs.node-version }}
+    - id: cache
+      uses: ./.github/actions/cache
+      with:
+        key: ${{ inputs.cache-key }}
+        cypress: ${{ inputs.cache-cypress }}
+    - run: npm ci
+      if: ${{ !steps.cache.outputs.hit }}
+      shell: bash
+    - id: affected
+      if: ${{ inputs.load-affecteds }}
+      uses: ./.github/actions/affected

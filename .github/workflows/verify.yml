@@ -1,0 +1,55 @@
+name: Verify
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+env:
+  CI: true
+  FORCE_COLOR: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      affected: ${{ steps.setup.outputs.affected }}
+      cache-key: ${{ steps.setup.outputs.cache-key }}
+      NX_BASE: ${{ env.NX_BASE }}
+      NX_HEAD: ${{ env.NX_HEAD }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+        with:
+          load-affecteds: true
+          cache-cypress: true
+
+  verify:
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      NX_BASE: ${{ needs.setup.outputs.NX_BASE }}
+      NX_HEAD: ${{ needs.setup.outputs.NX_HEAD }}
+    if: needs.setup.outputs.affected != ''
+    strategy:
+      matrix:
+        task: ['format:check', lint, 'test --ci', 'build --prod', e2e]
+    name: ${{ matrix.task }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          cache-key: ${{ needs.setup.outputs.cache-key }}
+          cache-cypress: ${{ matrix.task == 'e2e' }}
+      - run: npx nx affected --target=${{ matrix.task }} --parallel
