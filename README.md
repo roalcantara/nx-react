@@ -43,6 +43,8 @@
 - Run `npx nx run front:e2e` to run the e2e tests for the front app
 - Run `npx nx run front:deploy:preview` to deploy front to preview environment
 - Run `npx nx run front:deploy:production` to deploy front to production environment
+- Run `npx nx run front:emulate:preview` to build for preview and [emulates][21] front with [hotreload][20]: `http://localhost:5888`
+- Run `npx nx run front:emulate:production` to build for production and [emulates][21] front with [hotreload][20]: `http://localhost:5888`
 
 ### Nx: Smart, Fast and Extensible Build System
 
@@ -98,3 +100,5 @@ The project is available as open source under the terms of the [MIT][1] [License
 [17]: https://prettier.io 'Prettier: Opinionated Code Formatter'
 [18]: https://jestjs.io 'Jest: Delightful JavaScript Testing'
 [19]: https://eslint.org 'ESLint'
+[20]: https://facebook.github.io/watchman 'Watchman: A file watching service'
+[21]: https://firebase.google.com/docs/emulator-suite 'Firebase Local Emulator Suite'

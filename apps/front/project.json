@@ -128,6 +128,34 @@
           ]
         }
       }
+    },
+    "emulate": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npx firebase use preview" },
+            { "command": "npx nx run front:build:preview" },
+            { "command": "sleep 2" },
+            {
+              "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build:preview' & npx firebase --project preview emulators:start --only hosting"
+            }
+          ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npx firebase use production" },
+            { "command": "npx nx run front:build:production" },
+            { "command": "sleep 2" },
+            {
+              "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build:production' & npx firebase --project production emulators:start --only hosting"
+            }
+          ]
+        }
+      }
     }
   }
 }
