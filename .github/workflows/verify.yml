@@ -53,3 +53,25 @@ jobs:
           cache-key: ${{ needs.setup.outputs.cache-key }}
           cache-cypress: ${{ matrix.task == 'e2e' }}
       - run: npx nx affected --target=${{ matrix.task }} --parallel
+
+  lighthouse:
+    needs:
+      - setup
+      - verify
+    runs-on: ubuntu-latest
+    if: contains(needs.setup.outputs.affected, 'front')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          cache-key: ${{ needs.setup.outputs.cache-key }}
+      - run: npx nx run front:build:preview
+      - name: Lighthouse
+        uses: ./.github/actions/lhci
+        with:
+          token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          cmd: --collect.staticDistDir=./dist/apps/front
+          name: front

@@ -71,6 +71,7 @@
 - [ASDF: Manage multiple runtime versions with a single CLI tool][14]
 - [Direnv: A better way to manage your environments][15]
 - [Nx][16]
+- [Lighthouse: Open-source, automated tool for improving the quality of web pages][22]
 
 ## Contributing
 
@@ -103,3 +104,4 @@ The project is available as open source under the terms of the [MIT][1] [License
 [19]: https://eslint.org 'ESLint'
 [20]: https://facebook.github.io/watchman 'Watchman: A file watching service'
 [21]: https://firebase.google.com/docs/emulator-suite 'Firebase Local Emulator Suite'
+[22]: https://developers.google.com/web/tools/lighthouse 'Lighthouse: Open-source, automated tool for improving the quality of web pages'
