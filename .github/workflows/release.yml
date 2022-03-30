@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  CI: true
+  NODE_VERSION: 16
+  SEMANTIC_VERSION: 19
+  FORCE_COLOR: true
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    if: "!contains(toJSON(github.event.commits.*.message), '[skip-ci]') && !contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          cache: npm
+          node-version: ${{ env.NODE_VERSION }}
+      - run: echo "::set-output name=key::${{ hashFiles('package-lock.json') }}"
+        id: cache
+      - uses: actions/cache@v2
+        id: bundle
+        with:
+          path: ${{ env.CACHE_PATH }}
+          key: ${{ runner.os }}-${{ steps.cache.outputs.key }}
+      - run: npm ci
+        if: ${{ !steps.bundle.outputs.cache-hit }}
+      - uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          semantic_version: ${{ env.SEMANTIC_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new_release_minor_version }}
+          echo ${{ steps.semantic.outputs.new_release_patch_version }}

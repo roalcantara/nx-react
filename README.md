@@ -9,6 +9,7 @@
 [![eslint](https://img.shields.io/badge/code%20style-eslint-green.svg)][19]
 [![jest](https://jestjs.io/img/jest-badge.svg)][18]
 [![Verify](https://github.com/roalcantara/nx-react/actions/workflows/verify.yaml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/verify.yaml)
+[![Release](https://github.com/roalcantara/nx-react/actions/workflows/release.yml/badge.svg)](https://github.com/roalcantara/nx-react/actions/workflows/release.yml)
 
 ## Dependencies
 
@@ -72,6 +73,7 @@
 - [Direnv: A better way to manage your environments][15]
 - [Nx][16]
 - [Lighthouse: Open-source, automated tool for improving the quality of web pages][22]
+- [Semantic Release][23]
 
 ## Contributing
 
@@ -105,3 +107,4 @@ The project is available as open source under the terms of the [MIT][1] [License
 [20]: https://facebook.github.io/watchman 'Watchman: A file watching service'
 [21]: https://firebase.google.com/docs/emulator-suite 'Firebase Local Emulator Suite'
 [22]: https://developers.google.com/web/tools/lighthouse 'Lighthouse: Open-source, automated tool for improving the quality of web pages'
+[23]: https://semantic-release.gitbook.io/semantic-release 'Semantic Release'
