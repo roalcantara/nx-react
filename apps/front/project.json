@@ -9,7 +9,14 @@
       "options": {
         "cwd": "./",
         "parallel": false,
-        "commands": [{ "command": "rm -rf dist/apps/front" }, { "command": "mkdir -p dist/apps/front" }]
+        "commands": [
+          {
+            "command": "rm -rf dist/apps/front"
+          },
+          {
+            "command": "mkdir -p dist/apps/front"
+          }
+        ]
       }
     },
     "build": {
@@ -17,21 +24,40 @@
       "options": {
         "cwd": "apps/front",
         "parallel": false,
-        "commands": [{ "command": "npx nx run front:prepare" }, { "command": "NODE_ENV=development npm run build" }]
+        "commands": [
+          {
+            "command": "npx nx run front:prepare"
+          },
+          {
+            "command": "NODE_ENV=development npm run build"
+          }
+        ]
       },
       "configurations": {
         "preview": {
           "commands": [
-            { "command": "npx nx run front:prepare" },
-            { "command": "NODE_ENV=preview npm run build" },
-            { "command": "compress-cra -d dist/apps/front" }
+            {
+              "command": "npx nx run front:prepare"
+            },
+            {
+              "command": "NODE_ENV=preview npm run build"
+            },
+            {
+              "command": "compress-cra -d dist/apps/front"
+            }
           ]
         },
         "production": {
           "commands": [
-            { "command": "npx nx run front:prepare" },
-            { "command": "NODE_ENV=production npm run build" },
-            { "command": "compress-cra -d dist/apps/front" }
+            {
+              "command": "npx nx run front:prepare"
+            },
+            {
+              "command": "NODE_ENV=production npm run build"
+            },
+            {
+              "command": "compress-cra -d dist/apps/front"
+            }
           ]
         }
       }
@@ -41,12 +67,19 @@
       "options": {
         "cwd": "apps/front",
         "parallel": false,
-        "commands": [{ "command": "npm run start" }]
+        "commands": [
+          {
+            "command": "npm run start"
+          }
+        ],
+        "proxyConfig": "apps/front/proxy.conf.json"
       },
       "configurations": {
         "production": {
           "commands": [
-            { "command": "npx nx run front:build:production" },
+            {
+              "command": "npx nx run front:build:production"
+            },
             {
               "command": "npx sirv ../../dist/apps/front --port 8080 --cors --single"
             }
@@ -66,7 +99,11 @@
       "options": {
         "cwd": "apps/front",
         "parallel": false,
-        "commands": [{ "command": "npm run test -- --watchAll=false" }]
+        "commands": [
+          {
+            "command": "npm run test -- --watchAll=false"
+          }
+        ]
       }
     },
     "e2e": {
@@ -82,7 +119,7 @@
       }
     },
     "bundle": {
-      "builder": "@nrwl/workspace:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
         "color": true,
         "parallel": false
@@ -90,22 +127,34 @@
       "configurations": {
         "preview": {
           "commands": [
-            { "command": "npm run clear" },
-            { "command": "npx firebase use preview" },
-            { "command": "npx nx run front:build:preview" }
+            {
+              "command": "npm run clear"
+            },
+            {
+              "command": "npx firebase use preview"
+            },
+            {
+              "command": "npx nx run front:build:preview"
+            }
           ]
         },
         "production": {
           "commands": [
-            { "command": "npm run clear" },
-            { "command": "npx firebase use production" },
-            { "command": "npx nx run front:build:production" }
+            {
+              "command": "npm run clear"
+            },
+            {
+              "command": "npx firebase use production"
+            },
+            {
+              "command": "npx nx run front:build:production"
+            }
           ]
         }
       }
     },
     "deploy": {
-      "builder": "@nrwl/workspace:run-commands",
+      "executor": "@nrwl/workspace:run-commands",
       "options": {
         "color": true,
         "parallel": false
@@ -113,7 +162,9 @@
       "configurations": {
         "preview": {
           "commands": [
-            { "command": "npx nx run front:bundle:preview" },
+            {
+              "command": "npx nx run front:bundle:preview"
+            },
             {
               "command": "npx firebase deploy --only hosting --project=preview"
             }
@@ -121,7 +172,9 @@
         },
         "production": {
           "commands": [
-            { "command": "npx nx run front:bundle:production" },
+            {
+              "command": "npx nx run front:bundle:production"
+            },
             {
               "command": "npx firebase deploy --only hosting --project=production"
             }
@@ -137,9 +190,15 @@
       "configurations": {
         "preview": {
           "commands": [
-            { "command": "npx firebase use preview" },
-            { "command": "npx nx run front:build:preview" },
-            { "command": "sleep 2" },
+            {
+              "command": "npx firebase use preview"
+            },
+            {
+              "command": "npx nx run front:build:preview"
+            },
+            {
+              "command": "sleep 2"
+            },
             {
               "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build:preview' & npx firebase --project preview emulators:start --only hosting"
             }
@@ -147,9 +206,15 @@
         },
         "production": {
           "commands": [
-            { "command": "npx firebase use production" },
-            { "command": "npx nx run front:build:production" },
-            { "command": "sleep 2" },
+            {
+              "command": "npx firebase use production"
+            },
+            {
+              "command": "npx nx run front:build:production"
+            },
+            {
+              "command": "sleep 2"
+            },
             {
               "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build:production' & npx firebase --project production emulators:start --only hosting"
             }
