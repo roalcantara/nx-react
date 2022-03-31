@@ -1,0 +1,40 @@
+name: Cypress path
+description: Returns the current cypress path
+inputs:
+  key:
+    description: Cache key
+    required: true
+  cypress:
+    description: Cache cypress
+    required: true
+outputs:
+  key:
+    description: Cache key
+    value: ${{ steps.cache-key.outputs.value }}
+  hit:
+    description: Cache hit
+    value: ${{ steps.cache-node.outputs.cache-hit || steps.cache-cypress.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - id: key
+      if: ${{ !inputs.key }}
+      run: echo "::set-output name=value::cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}"
+      shell: bash
+    - id: cache-key
+      run: echo "::set-output name=value::${{ inputs.key || steps.key.outputs.value }}"
+      shell: bash
+    - id: version
+      run: echo "::set-output name=value::$(npm info cypress version --silent --color=false --emoji=false --flat --non-interactive | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g')"
+      shell: bash
+    - id: cache-node
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ steps.cache-key.outputs.value }}-node-modules
+    - id: cache-cypress
+      if: ${{ inputs.cypress == 'true' }}
+      uses: actions/cache@v3
+      with:
+        path: /home/runner/.cache/Cypress/${{ steps.version.outputs.value }}
+        key: ${{ steps.cache-key.outputs.value }}-cypress

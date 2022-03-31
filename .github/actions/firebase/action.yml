@@ -1,0 +1,48 @@
+name: Affected apps
+description: Count affected apps
+inputs:
+  lhci-token:
+    description: Github Repository Token
+    required: true
+  token:
+    description: Github Repository Token
+    required: true
+  project-name:
+    description: Firebase Project Name
+    required: true
+  project-id:
+    description: Firebase Project ID
+    required: true
+  service-account:
+    description: Firebase service account
+    required: true
+  env:
+    description: Environment
+    required: false
+outputs:
+  urls:
+    description: The url(s) deployed to
+    value: ${{ steps.firebase.outputs.urls }}
+  url:
+    description: A single URL that was deployed to
+    value: ${{ steps.firebase.outputs.details_url }}
+runs:
+  using: composite
+  steps:
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      id: firebase
+      with:
+        channelId: ${{ inputs.env }}
+        repoToken: ${{ inputs.token }}
+        projectId: ${{ inputs.project-id }}
+        firebaseServiceAccount: ${{ inputs.service-account }}
+    - run: echo "URLS to ${{ steps.firebase.outputs.urls }}"
+      shell: bash
+    - run: echo "Deployed to ${{ steps.firebase.outputs.details_url }}"
+      shell: bash
+    - uses: ./.github/actions/lhci
+      if: ${{ steps.firebase.outputs.details_url }}
+      with:
+        token: ${{ inputs.lhci-token }}
+        cmd: --collect.url=${{ steps.firebase.outputs.details_url }}
+        name: ${{ inputs.project-name }}

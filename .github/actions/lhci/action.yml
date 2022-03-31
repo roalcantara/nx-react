@@ -1,0 +1,23 @@
+name: Affected apps
+description: Count affected apps
+inputs:
+  token:
+    description: LHCI_GITHUB_APP_TOKEN
+    required: true
+  cmd:
+    description: Command
+    required: true
+  name:
+    description: Artifact name
+    required: true
+runs:
+  using: composite
+  steps:
+    - run: npx lhci autorun --collect.isSinglePageApplication=true ${{ inputs.cmd }}
+      shell: bash
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ inputs.token }}
+    - uses: actions/upload-artifact@v2
+      with:
+        name: lighthouse-${{ inputs.name }}
+        path: .lighthouseci

@@ -1,46 +1,36 @@
 name: Deployment
 
-on: push
+concurrency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  release:
+    types:
+      - created
 
 env:
   CI: true
-  NODE_VERSION: 16
   FORCE_COLOR: true
-  CACHE_PATH: node_modules
 
 jobs:
-  deploy_production:
+  deployment:
     runs-on: ubuntu-latest
-    environment: production
+    environment:
+      name: preview
+      url: ${{ steps.firebase.outputs.url }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          cache: npm
-          node-version: ${{ env.NODE_VERSION }}
-      - uses: actions/cache@v2
-        id: cache
-        with:
-          path: ${{ env.CACHE_PATH }}
-          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-      - run: npm ci
-        if: ${{ !steps.cache.outputs.cache-hit }}
+      - name: Setup
+        uses: ./.github/actions/setup
       - run: npx nx run front:build:production
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy to production
         id: firebase
+        uses: ./.github/actions/firebase
         with:
-          channelId: live
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          projectId: ${{ secrets.FIREBASE_PROJECT_ID_PRODUCTION }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO }}
-      - run: echo "outputs ${{ steps.firebase.outputs }}"
-      - run: echo "toJSON ${{ toJSON(steps.firebase.outputs) }}"
-      - run: echo "toJSON details_url to ${{ toJSON(steps.firebase.outputs).details_url }}"
-      - run: echo "Deployed to ${{ steps.firebase.outputs.details_url }}"
-      # - run: npx lhci autorun --collect.url=${{ steps.firebase.outputs.details_url }} --collect.isSinglePageApplication=true
-      #   env:
-      #     LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-      # - uses: actions/upload-artifact@v2
-      #   with:
-      #     name: lighthouse-front-production
-      #     path: .lighthouseci
+          env: live
+          name: front-production
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-id: ${{ secrets.FIREBASE_PROJECT_ID_PRODUCTION }}
+          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO }}
+          lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
