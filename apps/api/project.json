@@ -1,0 +1,127 @@
+{
+  "root": "apps/api",
+  "sourceRoot": "apps/api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/api",
+        "main": "apps/api/src/main.ts",
+        "tsConfig": "apps/api/tsconfig.app.json",
+        "assets": ["apps/api/src/assets"],
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/api/src/environments/environment.ts",
+              "with": "apps/api/src/environments/environment.prod.ts"
+            }
+          ],
+          "main": "apps/api/src/index.ts",
+          "engines": {
+            "node": "16"
+          }
+        },
+        "preview": {
+          "main": "apps/api/src/index.ts",
+          "engines": {
+            "node": "16"
+          },
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "api:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/api"],
+      "options": {
+        "jestConfig": "apps/api/jest.config.js",
+        "passWithNoTests": true,
+        "testTimeout": 10000
+      }
+    },
+    "emulate": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "color": true,
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use preview" },
+            { "command": "npx nx run api:build:preview --watch &" },
+            { "command": "sleep 3" },
+            {
+              "command": "npx firebase emulators:start --project=preview --only functions"
+            }
+          ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use production" },
+            { "command": "npx nx run api:build:production --watch &" },
+            { "command": "sleep 3" },
+            {
+              "command": "npx firebase emulators:start --project=production --only functions"
+            }
+          ]
+        }
+      }
+    },
+    "deploy": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "color": true,
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use preview" },
+            { "command": "npx nx run api:build:preview" },
+            {
+              "command": "npx firebase deploy --project=preview --only functions"
+            }
+          ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use production" },
+            { "command": "npx nx run api:build:production" },
+            {
+              "command": "npx firebase deploy --project=production --only functions"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "tags": []
+}

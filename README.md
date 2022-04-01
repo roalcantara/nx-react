@@ -49,6 +49,16 @@
 - Run `npx nx run front:emulate:preview` to build for preview and [emulates][21] front with [hotreload][20]: `http://localhost:5888`
 - Run `npx nx run front:emulate:production` to build for production and [emulates][21] front with [hotreload][20]: `http://localhost:5888`
 
+### API
+
+- Run `npm run api` to build the api app: `http://localhost:3000`
+- Run `npx nx run api:test` to run the api tests
+- Run `npx nx run api:build` to build the api locally
+- Run `npx nx run api:emulate:preview` to emulate the production API with [hotreload][20]: `http://localhost:5001/nx-mono-preview/us-central1/api`
+- Run `npx nx run api:emulate:production` to emulate the production API with [hotreload][20]: `http://localhost:5001/nx-mono/us-central1/api`
+- Run `npx nx run api:deploy:preview` to deploy the api to preview environment
+- Run `npx nx run api:deploy:production` to deploy the api to production environment
+
 ### Nx: Smart, Fast and Extensible Build System
 
 [Nx][16] supports many plugins which add capabilities for developing different types of applications and different tools.

@@ -26,3 +26,27 @@ jobs:
           project-id: ${{ secrets.FIREBASE_PROJECT_ID_PRODUCTION }}
           service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO }}
           lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy_api:
+    needs: deployment
+    runs-on: ubuntu-latest
+    environment:
+      name: api
+      url: ${{ steps.deployment.outputs.url }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          cache-key: ${{ needs.setup.outputs.cache-key }}
+      - run: npx nx run api:build:production
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions --project=production
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_PROJECT_PRODUCTION_TOKEN }}
+      - run: echo "::set-output name=url::${{ env.DEPLOYMENT_URL }}"
+        if: success()
+        id: deployment
+        env:
+          DEPLOYMENT_URL: ${{ secrets.FIREBASE_PROJECT_PRODUCTION_API_URL }}
