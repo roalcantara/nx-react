@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Company } from '@demo/domain'
+import { Company, PhoneNumber } from '@demo/domain'
 import * as datasource from './db.json'
 
 export const toRecord = <T extends Record<string | number, any>, K extends keyof T>(array: T[], selector: K) =>
@@ -10,6 +10,10 @@ export const database = {
     companies: {
       entries: datasource.companies as unknown as Array<Company>,
       map: toRecord(datasource.companies, 'id')
+    },
+    phone_numbers: {
+      entries: datasource.phone_numbers as unknown as Array<PhoneNumber>,
+      map: toRecord(datasource.phone_numbers, 'id')
     }
   })
 }
