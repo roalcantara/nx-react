@@ -18,7 +18,11 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
-    "paths": {}
+    "paths": {
+      "@demo/domain": ["libs/domain/src/index.ts"]
+    },
+    "noImplicitReturns": false,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "tmp"]
 }

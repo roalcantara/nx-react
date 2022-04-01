@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "domain": "libs/domain",
     "front": "apps/front"
   }
 }
