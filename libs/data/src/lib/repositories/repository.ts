@@ -6,4 +6,6 @@ export class Repository<K extends string | number, T> {
   findAll = () => this.entries
 
   first = () => this.entries[0]
+
+  where = (predicate: (it: T) => boolean) => this.entries.filter(predicate)
 }
