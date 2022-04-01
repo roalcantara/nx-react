@@ -8,6 +8,10 @@ export const api = (host = 'localhost', port = 3000) =>
     .use(cors({ origin: `http://${host}:${port}` }))
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({ extended: true }))
+    .all('*', (_, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*')
+      next()
+    })
     .use('/company', companyRoutes)
     .use('/number', phoneNumberRoutes)
     .use('/', companyRoutes)
