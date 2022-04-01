@@ -109,6 +109,16 @@
               "command": "npx firebase deploy --project=preview --only functions"
             }
           ]
+        },
+        "production": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use production" },
+            { "command": "npx nx run api:build:production" },
+            {
+              "command": "npx firebase deploy --project=production --only functions"
+            }
+          ]
         }
       }
     }

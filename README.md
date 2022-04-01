@@ -57,6 +57,7 @@
 - Run `npx nx run api:emulate:preview` to emulate the production API with [hotreload][20]: `http://localhost:5001/nx-mono-preview/us-central1/api`
 - Run `npx nx run api:emulate:production` to emulate the production API with [hotreload][20]: `http://localhost:5001/nx-mono/us-central1/api`
 - Run `npx nx run api:deploy:preview` to deploy the api to preview environment
+- Run `npx nx run api:deploy:production` to deploy the api to production environment
 
 ### Nx: Smart, Fast and Extensible Build System
 
