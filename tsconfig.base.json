@@ -19,6 +19,7 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@demo/data": ["libs/data/src/index.ts"],
       "@demo/domain": ["libs/domain/src/index.ts"]
     },
     "noImplicitReturns": false,
