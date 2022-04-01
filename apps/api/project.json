@@ -92,6 +92,25 @@
           ]
         }
       }
+    },
+    "deploy": {
+      "builder": "@nrwl/workspace:run-commands",
+      "options": {
+        "color": true,
+        "parallel": false
+      },
+      "configurations": {
+        "preview": {
+          "commands": [
+            { "command": "npm run clear" },
+            { "command": "npx firebase use preview" },
+            { "command": "npx nx run api:build:preview" },
+            {
+              "command": "npx firebase deploy --project=preview --only functions"
+            }
+          ]
+        }
+      }
     }
   },
   "tags": []
