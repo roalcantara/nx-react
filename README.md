@@ -36,6 +36,7 @@
 
 ### Front
 
+- Run `npm run static` to build and run the app at `http://localhost:8080`
 - Run `npx nx run front:build` to build the front app
 - Run `npx nx run front:build:preview` to build the front app in preview mode
 - Run `npx nx run front:build:production` to build the front app in production mode

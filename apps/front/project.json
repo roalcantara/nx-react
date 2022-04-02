@@ -84,6 +84,19 @@
               "command": "npx sirv ../../dist/apps/front --port 8080 --cors --single"
             }
           ]
+        },
+        "dev": {
+          "commands": [
+            {
+              "command": "npx nx run front:build"
+            },
+            {
+              "command": "sleep 3"
+            },
+            {
+              "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build' & npx sirv ../../dist/apps/front --port 8080 --cors --single"
+            }
+          ]
         }
       }
     },
