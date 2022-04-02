@@ -1,4 +1,7 @@
 import { handleResponse } from './response.handler.helper'
 
-export const Get = (...path: (string | undefined)[]) =>
-  fetch(['http://localhost:3000', ...path].join('/')).then(handleResponse)
+const ENDPOINT = process.env['REACT_APP_API_URL'] || 'http://localhost:3000'
+
+export const Get = async (...path: (string | undefined)[]) => {
+  return fetch([ENDPOINT, ...path].join('/')).then(handleResponse)
+}

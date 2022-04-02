@@ -40,6 +40,9 @@
               "command": "npx nx run front:prepare"
             },
             {
+              "command": "npx env-cmd -f .env.preview"
+            },
+            {
               "command": "NODE_ENV=preview npm run build"
             },
             {
@@ -51,6 +54,9 @@
           "commands": [
             {
               "command": "npx nx run front:prepare"
+            },
+            {
+              "command": "npx env-cmd -f .env.production"
             },
             {
               "command": "NODE_ENV=production npm run build"
