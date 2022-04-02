@@ -40,7 +40,7 @@
               "command": "npx nx run front:prepare"
             },
             {
-              "command": "NODE_ENV=preview npm run build"
+              "command": "NODE_ENV=preview npx env-cmd -f .env.preview npm run build"
             },
             {
               "command": "compress-cra -d dist/apps/front"
@@ -53,7 +53,7 @@
               "command": "npx nx run front:prepare"
             },
             {
-              "command": "NODE_ENV=production npm run build"
+              "command": "NODE_ENV=production npx env-cmd -f .env.production npm run build"
             },
             {
               "command": "compress-cra -d dist/apps/front"
@@ -71,17 +71,46 @@
           {
             "command": "npm run start"
           }
-        ],
-        "proxyConfig": "apps/front/proxy.conf.json"
+        ]
       },
       "configurations": {
+        "dist": {
+          "commands": [
+            {
+              "command": "npx sirv ../../dist/apps/front --port 8080 --cors --single"
+            }
+          ]
+        },
+        "preview": {
+          "commands": [
+            {
+              "command": "npx nx run front:build:preview"
+            },
+            {
+              "command": "npx nx run front:serve:dist"
+            }
+          ]
+        },
         "production": {
           "commands": [
             {
               "command": "npx nx run front:build:production"
             },
             {
-              "command": "npx sirv ../../dist/apps/front --port 8080 --cors --single"
+              "command": "npx nx run front:serve:dist"
+            }
+          ]
+        },
+        "dev": {
+          "commands": [
+            {
+              "command": "npx nx run front:build"
+            },
+            {
+              "command": "sleep 3"
+            },
+            {
+              "command": "watchman-make -p 'apps/front/**/*.*' --run 'npx nx run front:build' & npx nx run front:serve:dist"
             }
           ]
         }

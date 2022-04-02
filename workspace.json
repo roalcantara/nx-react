@@ -4,6 +4,7 @@
     "api": "apps/api",
     "data": "libs/data",
     "domain": "libs/domain",
-    "front": "apps/front"
+    "front": "apps/front",
+    "ui": "libs/ui"
   }
 }
