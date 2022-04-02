@@ -51,7 +51,9 @@
     "help": "npx nx help",
     "semantic-release": "semantic-release",
     "api": "npx nx serve api",
-    "static": "npx nx run front:serve:dev"
+    "static": "npx nx run front:serve:dev",
+    "deploy:preview": "npx nx run api:deploy:preview && npx nx run front:deploy:preview",
+    "deploy": "npx nx run api:deploy:production && npx nx run front:deploy:production"
   },
   "dependencies": {
     "body-parser": "^1.19.2",

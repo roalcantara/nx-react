@@ -40,6 +40,8 @@
 - Run `npm run lint:all` to lint all apps and libs
 - Run `npm run test:all` to test all apps and libs
 - Run `npm run e2e:all` to run the e2e tests for all apps and libs
+- Run `npm run deploy` to deploy all apps to production
+- Run `npm run deploy:preview` to deploy all apps to preview
 
 ### Front
 
