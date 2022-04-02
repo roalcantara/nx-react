@@ -1,4 +1,5 @@
 import { PhoneNumber } from '@demo/domain'
+import { Link } from 'react-router-dom'
 import styles from './company-phone-number-list.module.scss'
 
 export type CompanyPhoneNumberListProps = {
@@ -16,7 +17,9 @@ export const CompanyPhoneNumberList = ({ phones }: CompanyPhoneNumberListProps) 
     <tbody>
       {phones.map((phoneNumber) => (
         <tr key={phoneNumber.id}>
-          <td>{phoneNumber.id}</td>
+          <td>
+            <Link to={{ pathname: `/number/${phoneNumber.id}` }}>{phoneNumber.id}</Link>
+          </td>
           <td>{phoneNumber.type}</td>
         </tr>
       ))}
