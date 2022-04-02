@@ -1,0 +1,159 @@
+Apps/Front:
+  ☐ Fix SEO issues (https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/1648867919668-89000.report.html)
+  ☐ Improve layout
+  ☐ Improve error handling
+  ☐ Improve API URL setup
+  ☐ Add e2e tests
+    Currently the API URL is set during the build
+  Specs:
+    apps/front/src/pages/app/app.page.spec.tsx:
+      ☐ should render successfully
+    apps/front/src/pages/companies/companies.page.spec.tsx:
+      ☐ should render successfully
+    apps/front/src/pages/company/company.page.spec.tsx:
+      ☐ should render successfully
+    apps/front/src/pages/not-found/not-found.page.spec.tsx:
+      ☐ should render successfully
+    apps/front/src/pages/phone/phone.page.spec.tsx:
+      ☐ should render successfully
+
+Apps/Api:
+  Specs:
+    apps/api/src/app/data/database.spec.ts:
+      ☐ build
+        ☐ builds a database
+      ☐ Companies
+        ☐ entries
+          ☐ returns a list of Companies
+        ☐ map
+          ☐ returns a map of Companies
+      ☐ PhoneNumbers
+        ☐ entries
+          ☐ returns a list of PhoneNumbers
+        ☐ map
+          ☐ returns a map of PhoneNumbers
+
+    apps/api/src/app/domain/company.repository.spec.ts:
+      ☐ get()
+        ☐ returns a Company
+        ☐ when no key is given
+          ☐ returns undefined
+        ☐ when datasource is empty
+          ☐ returns undefined
+      ☐ first()
+        ☐ returns the first Company from datasource
+        ☐ when datasource is empty
+          ☐ returns undefined
+      ☐ findAll()
+        ☐ returns all Companies
+        ☐ when datasource is empty
+          ☐ returns undefined
+
+    apps/api/src/app/domain/phone_number.repository.spec.ts:
+      ☐ get()
+        ☐ returns a PhoneNumber
+      ☐ when no key is given
+        ☐ returns undefined
+      ☐ when datasource is empty
+        ☐ returns undefined
+      ☐ first()
+        ☐ returns the first PhoneNumber from datasource
+      ☐ when datasource is empty
+        ☐ returns undefined
+      ☐ findAll()
+        ☐ returns all PhoneNumbers
+      ☐ when datasource is empty
+        ☐ returns undefined
+    apps/api/src/app/routes/company.routes.spec.ts:
+      ☐ GET /
+        ☐ returns 201
+        ☐ returns a list of Companies
+        ☐ has a get /companyId endpoint
+      ☐ GET /:companyId
+        ☐ returns 201
+        ☐ returns a Company
+      ☐ when there is no company for a given id
+        ☐ returns 404
+    apps/api/src/app/routes/phone_number.routes.spec.ts:
+      ☐ GET /
+        ☐ returns 201
+        ☐ returns a list of PhoneNumbers
+        ☐ has a get /numberId endpoint
+      ☐ GET /:numberId
+        ☐ returns 201
+        ☐ returns a PhoneNumber
+        ☐ when there is no PhoneNumber for a given id
+          ☐ returns 404
+
+    apps/api/src/app/routes/route.factory.spec.ts:
+      ☐ build
+        ☐ builds a route
+        ☐ route
+        ☐ has a get / endpoint
+      ☐ GET /
+        ☐ returns 201
+        ☐ returns a list of entities
+        ☐ has a get /entityId endpoint
+      ☐ GET /:entityId
+        ☐ returns 201
+        ☐ returns a entity
+        ☐ when there is no entity for a given id
+          ☐ returns 404
+
+Libs/Data:
+  Specs:
+    libs/data/src/lib/repositories/repository.factory.spec.ts:
+      ☐ build
+        ☐ returns a repository
+        ☐ when no db is given
+          ☐ throws an error
+        ☐ when no entries are given
+          ☐ throws an error
+    libs/data/src/lib/repositories/repository.spec.ts:
+      ☐ get()
+        ☐ returns a entity
+        ☐ when no key is given
+          ☐ returns undefined
+        ☐ when datasource is empty
+          ☐ returns undefined
+      ☐ first()
+        ☐ returns the first entity from datasource
+        ☐ when datasource is empty
+          ☐ returns undefined
+      ☐ findAll()
+        ☐ returns all entities
+        ☐ when datasource is empty
+          ☐ returns undefined
+
+Libs/ui:
+  Specs:
+    libs/ui/src/lib/api-helpers/get.helper.spec.tsx:
+      ☐ should render successfully
+
+    libs/ui/src/lib/api-helpers/response.handler.helper.spec.tsx:
+      ☐ should render successfully
+
+    libs/ui/src/lib/go-back-button/go-back-button.spec.tsx:
+      ☐ should render successfully
+
+    libs/ui/src/lib/phone-number-item/phone-number-item.spec.tsx:
+      ☐ should render successfully
+
+Archive:
+  ✔ Create React project
+  ✔ Setup Prettier
+  ✔ Setup ESLint
+  ✔ Setup GitLint
+  ✔ Setup PWA support
+  ✔ Achieve 100% in Lighthouse
+  ✔ Add to Nx Workspace
+  ✔ Setup CI
+  ✔ Setup Semantic Release
+  ✔ Setup deploy to Preview per Pull Request
+  ✔ Setup deploy to Production per Release
+  ✔ Create Express Api project
+  ✔ Add companies routes
+  ✔ Add numbers routes
+  ✔ Integrate Front with the Api
+  ✔ Release alpha version
+  ✔ Create TODO list
