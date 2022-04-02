@@ -26,8 +26,15 @@
 
 ## Usage
 
+- Run `npm run api` to build and run `apps/api` at: `http://localhost:3000`
+- Run `npm run static` to build and run the `apps/front` at `http://localhost:8080`
+- Run `npm run start:dev` to build and run both simultaneously:
+  - the `apps/api` at `http://localhost:3000`
+  - the `apps/front` at `http://localhost:8080`
+
+### More
+
 - Run `npm run build` to build the main app
-- Run `npm run start` to start the main app
 - Run `npm run test` to test the main app
 - Run `npm run e2e` to run the e2e tests
 - Run `npm run lint:all` to lint all apps and libs
@@ -36,7 +43,6 @@
 
 ### Front
 
-- Run `npm run static` to build and run the app at `http://localhost:8080`
 - Run `npx nx run front:build` to build the front app
 - Run `npx nx run front:build:preview` to build the front app in preview mode
 - Run `npx nx run front:build:production` to build the front app in production mode
@@ -52,7 +58,6 @@
 
 ### API
 
-- Run `npm run api` to build the api app: `http://localhost:3000`
 - Run `npx nx run api:test` to run the api tests
 - Run `npx nx run api:build` to build the api locally
 - Run `npx nx run api:emulate:preview` to emulate the production API with [hotreload][20]: `http://localhost:5001/nx-mono-preview/us-central1/api`

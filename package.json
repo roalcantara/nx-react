@@ -27,6 +27,7 @@
     "purge": "npm run clear && rm -rf node-modules",
     "reset": "npm run purge && rm package-lock.json && npm i",
     "start": "npx nx serve",
+    "start:dev": "npx start-server-and-test 'BROWSER=none npm run api' 3000 'npm run static'",
     "build": "npx nx build",
     "test": "npx nx test",
     "e2e": "npx nx e2e",
