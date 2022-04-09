@@ -7,6 +7,7 @@ describe('#phoneNumberRoutes', () => {
 
   describe('#GET /', () => {
     test.todo('returns 201')
+
     test.todo('returns a list of PhoneNumbers')
   })
 
@@ -14,6 +15,7 @@ describe('#phoneNumberRoutes', () => {
 
   describe('#GET /:numberId', () => {
     test.todo('returns 201')
+
     test.todo('returns a PhoneNumber')
 
     describe('when there is no PhoneNumber for a given id', () => {

@@ -1,6 +1,6 @@
 import { Company } from '@demo/domain'
-import styles from './company-list.module.scss'
 import { Link } from 'react-router-dom'
+import styles from './company-list.module.scss'
 
 export type CompanyListProps = {
   companies: Company[]

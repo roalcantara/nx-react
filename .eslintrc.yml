@@ -87,6 +87,8 @@ overrides:
         - commonjs: true
           amd: true
           caseSensitive: true
+          ignore:
+            - '^@demo/.*$'
 
       import/first: error
       import/no-amd: error
@@ -120,6 +122,7 @@ overrides:
     rules:
       # typescript
       '@typescript-eslint/lines-between-class-members': off
+      '@typescript-eslint/dot-notation': off
   - files:
       - '*.js'
       - '*.jsx'

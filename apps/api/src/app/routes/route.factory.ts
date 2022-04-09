@@ -1,5 +1,5 @@
-import { Router } from 'express'
 import { Repository } from '@demo/data'
+import { Router } from 'express'
 
 export const routeFactory = {
   build: <K extends string | number, T>(entity: string, repository: Repository<K, T>) =>

@@ -6,7 +6,18 @@ on:
       - created
 
 jobs:
-  deployment:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.setup.outputs.cache-key }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup
+        id: setup
+        uses: ./.github/actions/setup
+
+  deploy_front:
+    needs: setup
     runs-on: ubuntu-latest
     environment:
       name: production
@@ -15,10 +26,13 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup
         uses: ./.github/actions/setup
+        with:
+          cache-key: ${{ needs.setup.outputs.cache-key }}
       - run: npx nx run front:build:production
-      - name: Deploy to production
+      - name: Deploy front to hosting production
+        uses: ./.github/actions/firebase/hosting
+        if: success()
         id: firebase
-        uses: ./.github/actions/firebase
         with:
           env: live
           name: front-production
@@ -28,11 +42,11 @@ jobs:
           lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
   deploy_api:
-    needs: deployment
+    needs: setup
     runs-on: ubuntu-latest
     environment:
-      name: api
-      url: ${{ steps.deployment.outputs.url }}
+      name: api-production
+      url: ${{ steps.firebase.outputs.url }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup
@@ -40,13 +54,12 @@ jobs:
         with:
           cache-key: ${{ needs.setup.outputs.cache-key }}
       - run: npx nx run api:build:production
-      - uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only functions --project=production
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_PROJECT_PRODUCTION_TOKEN }}
-      - run: echo "::set-output name=url::${{ env.DEPLOYMENT_URL }}"
+      - name: Deploy api to functions production
+        uses: ./.github/actions/firebase/functions
+        id: firebase
         if: success()
-        id: deployment
-        env:
-          DEPLOYMENT_URL: ${{ secrets.FIREBASE_PROJECT_PRODUCTION_API_URL }}
+        with:
+          project-name: api-production
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: production
+          url: ${{ secrets.FIREBASE_PROJECT_PRODUCTION_API_URL }}

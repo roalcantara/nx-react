@@ -32,32 +32,32 @@ jobs:
           load-affecteds: true
           cache-cypress: true
 
-  verify:
-    needs: setup
-    runs-on: ubuntu-latest
-    env:
-      NX_BASE: ${{ needs.setup.outputs.NX_BASE }}
-      NX_HEAD: ${{ needs.setup.outputs.NX_HEAD }}
-    if: needs.setup.outputs.affected != ''
-    strategy:
-      matrix:
-        task: ['format:check', lint, 'test --ci', 'build --prod', e2e]
-    name: ${{ matrix.task }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup
-        with:
-          cache-key: ${{ needs.setup.outputs.cache-key }}
-          cache-cypress: ${{ matrix.task == 'e2e' }}
-      - run: npx nx affected --target=${{ matrix.task }} --parallel
+  # verify:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     NX_BASE: ${{ needs.setup.outputs.NX_BASE }}
+  #     NX_HEAD: ${{ needs.setup.outputs.NX_HEAD }}
+  #   if: needs.setup.outputs.affected != ''
+  #   strategy:
+  #     matrix:
+  #       task: ['format:check', lint, 'test -- --ci', 'build --prod', e2e]
+  #   name: ${{ matrix.task }}
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Setup
+  #       uses: ./.github/actions/setup
+  #       with:
+  #         cache-key: ${{ needs.setup.outputs.cache-key }}
+  #         cache-cypress: ${{ matrix.task == 'e2e' }}
+  #     - run: npx nx affected --target=${{ matrix.task }} --parallel
 
   deployment:
     needs:
       - setup
-      - verify
+      # - verify
     runs-on: ubuntu-latest
     environment:
       name: preview
@@ -72,15 +72,15 @@ jobs:
         with:
           cache-key: ${{ needs.setup.outputs.cache-key }}
       - run: npx nx run front:build:preview
-      - name: Lighthouse
+      - name: Lighthouse locally
         uses: ./.github/actions/lhci
         with:
           token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           cmd: --collect.staticDistDir=./dist/apps/front
           name: front
-      - name: Deploy to preview
+      - name: Deploy front to hosting preview
         id: firebase
-        uses: ./.github/actions/firebase
+        uses: ./.github/actions/firebase/hosting
         if: success()
         with:
           project-name: front-preview
@@ -89,27 +89,28 @@ jobs:
           service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO_PREVIEW }}
           lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
 
-  deploy_preview_api:
-    needs: verify
+  deployment_api:
+    needs: setup
     runs-on: ubuntu-latest
     environment:
       name: api-preview
-      url: ${{ steps.deployment.outputs.url }}
+      url: ${{ steps.firebase.outputs.url }}
+    # if: contains(needs.setup.outputs.affected, 'api')
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Setup
         uses: ./.github/actions/setup
-        with:
-          cache-key: ${{ needs.setup.outputs.cache-key }}
+        # with:
+        #   cache-key: ${{ needs.setup.outputs.cache-key }}
       - run: npx nx run api:build:preview
-      - uses: w9jds/firebase-action@master
+      - name: Deploy api to functions preview
+        id: firebase
+        uses: ./.github/actions/firebase/functions
+        if: success()
         with:
-          args: deploy --only functions --project=preview
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_PROJECT_PREVIEW_TOKEN }}
-      - run: echo "::set-output name=url::${{ env.DEPLOYMENT_URL }}"
-        id: deployment
-        env:
-          DEPLOYMENT_URL: ${{ secrets.FIREBASE_PROJECT_PREVIEW_API_URL }}
+          env: preview
+          project-name: api-preview
+          token: ${{ secrets.GITHUB_TOKEN }}
+          url: ${{ secrets.FIREBASE_PROJECT_PREVIEW_API_URL }}

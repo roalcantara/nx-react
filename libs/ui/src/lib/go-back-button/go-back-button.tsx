@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
-import styles from './go-back-button.module.scss'
 import { useNavigate } from 'react-router-dom'
+import styles from './go-back-button.module.scss'
 
 export type GoBackButtonProps = {
   title?: string
