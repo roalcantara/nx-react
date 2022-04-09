@@ -1,0 +1,31 @@
+name: Deploy to functions
+description: Deploy to firebase functions
+inputs:
+  token:
+    description: Github Repository Token
+    required: true
+  project-name:
+    description: Firebase Project Name
+    required: true
+  env:
+    description: Environment
+    required: true
+  url:
+    description: Environment URL
+    required: true
+outputs:
+  url:
+    description: A single URL that was deployed to
+    value: ${{ steps.url.outputs.value }} | sed 's/./& /g'
+runs:
+  using: composite
+  steps:
+    - name: Deploy ${{ inputs.project-name }} to firebase functions ${{ inputs.env }}
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only functions --project=${{ inputs.env }}
+      env:
+        FIREBASE_TOKEN: ${{ inputs.token }}
+    - id: url
+      run: echo "::set-output name=value::${{ inputs.url }}"
+      shell: bash
