@@ -19,6 +19,9 @@ inputs:
   env:
     description: Environment
     required: false
+  target:
+    description: The target name of the Hosting site to deploy to
+    required: true
 outputs:
   urls:
     description: The url(s) deployed to
@@ -33,6 +36,7 @@ runs:
       id: firebase
       with:
         channelId: ${{ inputs.env }}
+        target: ${{ inputs.target }}
         repoToken: ${{ inputs.token }}
         projectId: ${{ inputs.project-id }}
         firebaseServiceAccount: ${{ inputs.service-account }}

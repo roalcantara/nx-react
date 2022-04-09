@@ -41,7 +41,7 @@ jobs:
   #   if: needs.setup.outputs.affected != ''
   #   strategy:
   #     matrix:
-  #       task: ['format:check', lint, 'test -- --ci --code-coverage', 'build --prod', e2e]
+  #       task: ['format:check', lint, 'test -- --ci', 'build --prod', e2e]
   #   name: ${{ matrix.task }}
   #   steps:
   #     - uses: actions/checkout@v3
@@ -54,48 +54,15 @@ jobs:
   #         cache-cypress: ${{ matrix.task == 'e2e' }}
   #     - run: npx nx affected --target=${{ matrix.task }} --parallel
 
-  # deployment:
-  #   needs:
-  #     - setup
-  #     - verify
-  #   runs-on: ubuntu-latest
-  #   environment:
-  #     name: preview
-  #     url: ${{ steps.firebase.outputs.url }}
-  #   if: contains(needs.setup.outputs.affected, 'front')
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         ref: ${{ github.event.pull_request.head.sha }}
-  #     - name: Setup
-  #       uses: ./.github/actions/setup
-  #       with:
-  #         cache-key: ${{ needs.setup.outputs.cache-key }}
-  #     - run: npx nx run front:build:preview
-  #     - name: Lighthouse locally
-  #       uses: ./.github/actions/lhci
-  #       with:
-  #         token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-  #         cmd: --collect.staticDistDir=./dist/apps/front
-  #         name: front
-  #     - name: Deploy front to hosting preview
-  #       id: firebase
-  #       uses: ./.github/actions/firebase/hosting
-  #       if: success()
-  #       with:
-  #         project-name: front-preview
-  #         token: ${{ secrets.GITHUB_TOKEN }}
-  #         project-id: ${{ secrets.FIREBASE_PROJECT_ID_PREVIEW }}
-  #         service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO_PREVIEW }}
-  #         lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-
-  deployment_api:
-    needs: setup
+  deployment:
+    needs:
+      - setup
+      # - verify
     runs-on: ubuntu-latest
     environment:
-      name: api-preview
+      name: preview
       url: ${{ steps.firebase.outputs.url }}
-    if: contains(needs.setup.outputs.affected, 'api')
+    if: contains(needs.setup.outputs.affected, 'front')
     steps:
       - uses: actions/checkout@v3
         with:
@@ -104,6 +71,39 @@ jobs:
         uses: ./.github/actions/setup
         with:
           cache-key: ${{ needs.setup.outputs.cache-key }}
+      - run: npx nx run front:build:preview
+      - name: Lighthouse locally
+        uses: ./.github/actions/lhci
+        with:
+          token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          cmd: --collect.staticDistDir=./dist/apps/front
+          name: front
+      - name: Deploy front to hosting preview
+        id: firebase
+        uses: ./.github/actions/firebase/hosting
+        if: success()
+        with:
+          project-name: front-preview
+          token: ${{ secrets.GITHUB_TOKEN }}
+          project-id: ${{ secrets.FIREBASE_PROJECT_ID_PREVIEW }}
+          service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_NX_MONO_PREVIEW }}
+          lhci-token: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deployment_api:
+    needs: setup
+    runs-on: ubuntu-latest
+    environment:
+      name: api-preview
+      url: ${{ steps.firebase.outputs.url }}
+    # if: contains(needs.setup.outputs.affected, 'api')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup
+        uses: ./.github/actions/setup
+        # with:
+        #   cache-key: ${{ needs.setup.outputs.cache-key }}
       - run: npx nx run api:build:preview
       - name: Deploy api to functions preview
         id: firebase
