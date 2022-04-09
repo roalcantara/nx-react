@@ -1,5 +1,5 @@
-import { database } from '../data/database'
 import { repositoryFactory } from '@demo/data'
+import { database } from '../data/database'
 
 const db = database.build()
 

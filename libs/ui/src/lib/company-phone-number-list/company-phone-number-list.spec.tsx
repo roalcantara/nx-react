@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react'
-
 import CompanyPhoneNumberList from './company-phone-number-list'
 
 describe('CompanyPhoneNumberList', () => {

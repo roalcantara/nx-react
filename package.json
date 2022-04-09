@@ -34,6 +34,7 @@
     "lint": "npx nx workspace-lint && nx lint",
     "test:all": "npx nx run-many --all --target=test --parallel",
     "lint:all": "npx nx workspace-lint && npx nx run-many --all --target=lint --parallel",
+    "lint:all:fix": "npx nx workspace-lint && npx nx run-many --all --fix --target=lint --parallel",
     "e2e:all": "npx nx run-many --all --target=e2e --parallel",
     "affected:apps": "npx nx affected:apps",
     "affected:libs": "npx nx affected:libs",

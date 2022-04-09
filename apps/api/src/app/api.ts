@@ -1,6 +1,6 @@
-import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import express from 'express'
 import { companyRoutes, phoneNumberRoutes } from './routes'
 
 export const api = (host = 'localhost', port = 3000) =>

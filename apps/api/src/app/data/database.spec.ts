@@ -12,6 +12,7 @@ describe('#database', () => {
       describe('#entries', () => {
         test.todo('returns a list of Companies')
       })
+
       describe('#map', () => {
         test.todo('returns a map of Companies')
       })
@@ -21,6 +22,7 @@ describe('#database', () => {
       describe('#entries', () => {
         test.todo('returns a list of PhoneNumbers')
       })
+
       describe('#map', () => {
         test.todo('returns a map of PhoneNumbers')
       })
